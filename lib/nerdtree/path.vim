@@ -372,14 +372,16 @@ endfunction
 "returns a string used in compare function for sorting
 function! s:Path.getSortKey()
     if !exists("self._sortKey")
-        let path = self.getLastPathComponent(1)
-        if !g:NERDTreeSortHiddenFirst
-            let path = substitute(path, '^[._]', '', '')
-        endif
-        if !g:NERDTreeCaseSensitiveSort
-            let path = tolower(path)
-        endif
-        let self._sortKey = printf(s:sortKeyFormat, self.getSortOrderIndex()) . path
+        let self._sortKey = -str2nr(system('stat -c %Y '.shellescape(self.str())))
+
+        " let path = self.getLastPathComponent(1)
+        " if !g:NERDTreeSortHiddenFirst
+        "     let path = substitute(path, '^[._]', '', '')
+        " endif
+        " if !g:NERDTreeCaseSensitiveSort
+        "     let path = tolower(path)
+        " endif
+        " let self._sortKey = printf(s:sortKeyFormat, self.getSortOrderIndex()) . path
     endif
 
     return self._sortKey
