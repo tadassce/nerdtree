@@ -372,7 +372,7 @@ endfunction
 "returns a string used in compare function for sorting
 function! s:Path.getSortKey()
     if !exists("self._sortKey")
-        let self._sortKey = -str2nr(system('stat -c %Y '.shellescape(self.str())))
+        let self._sortKey = -str2nr(system('stat -f %a '.shellescape(self.str())))
 
         " let path = self.getLastPathComponent(1)
         " if !g:NERDTreeSortHiddenFirst
